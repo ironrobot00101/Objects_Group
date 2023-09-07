@@ -10,16 +10,6 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private bool isEnemyBullet;
 
-
-
-    private string targetTag;
-
-    private void Start()
-    {
-        //this doesn't work because it's 3D
-        //transform.LookAt(GameObject.FindWithTag("Player").transform);
-    }
-
     public void SetBullet(float _damage, string _targetTag, float speed, bool _isEnemyBullet)
     {
         this.damage = _damage;
@@ -32,7 +22,6 @@ public class Bullet : MonoBehaviour
         if(collision.CompareTag("Enemy") && isEnemyBullet == false)
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            //Debug.Log(enemy.health.GetHealth() + " is health, and " + enemy.name + "is name for this enemy");
             enemy.GetDamage(damage);
             Destroy(gameObject);
         } else if (collision.CompareTag("Player") && isEnemyBullet == true)
@@ -40,7 +29,6 @@ public class Bullet : MonoBehaviour
             Player player = collision.GetComponent<Player>();
             player.GetDamage(damage);
             Destroy(gameObject);
-            
         }
     }
     private void Update()
@@ -50,17 +38,5 @@ public class Bullet : MonoBehaviour
     void Move()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
-    }
-
-    void Damage(IDamageable damageable)
-    {
-        if (damageable != null)
-        {
-            damageable.GetDamage(damage);
-            //LevelLoader.Score++;
-            Destroy(gameObject); 
-        }
-        Debug.Log("Bullet damaged target");
-        //damage target
     }
 }

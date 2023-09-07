@@ -24,55 +24,10 @@ public class Enemy : PlayableObject
 
     protected virtual void Update()
     {
-        
         ////rotate towards player
         target = GameObject.FindWithTag("Player").transform;
         transform.LookAt(target);
-        
-        //old rotate
-        //float angle = Mathf.Atan2(target.transform.position.x, target.transform.position.y) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0, 0, angle);
     }
-
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    Player player = GetComponent<Player>();
-    //    if (collision.gameObject.tag == "Player")
-    //    {
-    //        player.GetDamage(25);
-    //        Destroy(gameObject);
-    //    }
-    //}
-
-    //public void Update()
-    //{
-    //    //unsure why this is here?????
-    //    switch (enemyType)
-    //    {
-    //        case EnemyType.Melee:
-    //            Move(target.position);
-    //            Attack(1f);
-    //            break;
-    //        case EnemyType.Exploder:
-    //            Move(target.position);
-    //            Shoot();
-    //            break;
-    //        case EnemyType.Shooter:
-    //            Move(5.0f);
-    //            Attack(1f);
-    //            Shoot();
-    //            break;
-    //        case EnemyType.MachineGun:
-    //            Move(target.position);
-    //            Attack(0.5f);
-    //            Shoot();
-    //            break;
-    //    }
-
-    //}
-
-
     public override void Move(Vector2 direction, Vector2 target)
     {}
 
@@ -93,17 +48,13 @@ public class Enemy : PlayableObject
     {}
 
     public override void ShootPlayer()
-    {
-  
-    }
+    {}
 
     public override void Attack(float interval)
     {}
 
     public override void Attack(Transform target)
-    {
-
-    }
+    {}
 
     public void SetEnemyType(EnemyType enemyType)
     {
@@ -119,6 +70,5 @@ public class Enemy : PlayableObject
         {
             Die();
         }
-
     }
 }

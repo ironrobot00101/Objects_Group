@@ -9,43 +9,42 @@ public class GameManager2 : MonoBehaviour
     [SerializeField] private GameObject meleeEnemyPreFab;
     [SerializeField] private GameObject shootingEnemyPreFab;
     [SerializeField] private GameObject missileEnemyPreFab;
-    //powerups and items
+    //powerup prefabs
     [SerializeField] private GameObject shootingPowerupPreFab;
     [SerializeField] private GameObject bombPreFab;
-    //
+    //spawns
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private Transform[] powerupSpawnPoints;
+    //bool for spawn
+    private bool isEnemySpawning;
 
     [Header("Game Variables")]
     [SerializeField] private float enemySpawnRate;
     [SerializeField] private float powerupSpawnRate;
     [SerializeField] private float bombSpawnRate;
 
+    //temp stuff
     private GameObject tempEnemy;
     private GameObject tempPowerup;
-    private bool isEnemySpawning;
 
+    //speed vars
     static float shootingEnemyBulletSpeed = 3.03f;
     static float missileEnemyBulletSpeed = 7.14f;
     static float shootingEnemyDamage = 3.03f;
     static float missileEnemyDamage = 7.14f;
 
+    //weapons
     private Weapon meleeWeapon = new Weapon("Melee", 10, 0);
     private Weapon shootingWeapon = new Weapon("Shooting Enemy Weapon", shootingEnemyDamage, shootingEnemyBulletSpeed);
     private Weapon missileWeapon = new Weapon("Missile Enemy Weapon", missileEnemyDamage, missileEnemyBulletSpeed);
 
-    //Singleton
-
+    //instance
     private static GameManager2 instance;
 
-    //this is used if any information from the game manager needs to be accessed
     public static GameManager2 GetInstance()
     {
-        
         return instance;
     }
-
-    //this is a tool that prevents additional copies of the game manager to be created
     void SetSingleton()
     {
         if (instance != null && instance != this) 
@@ -75,25 +74,16 @@ public class GameManager2 : MonoBehaviour
         audioManager.PlayMusicAudio("music_main");
     }
 
-    private void Update()
-    {
-        
-    }
-
-    //Create a random enemy out of the screen
-
     void CreateEnemy()
     {
         tempEnemy = Instantiate(meleeEnemyPreFab);
         tempEnemy.transform.position = spawnPositions[Random.Range(0, spawnPositions.Length)].position;
         tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
-
-        
     }
 
     void CreateShootingEnemy()
     {
-        //spawn shooting
+        //spawn shooting enemy
         tempEnemy = Instantiate(shootingEnemyPreFab);
         tempEnemy.transform.position = spawnPositions[Random.Range(0, spawnPositions.Length)].position;
         tempEnemy.GetComponent<Enemy>().weapon = shootingWeapon;
@@ -102,7 +92,7 @@ public class GameManager2 : MonoBehaviour
 
     void CreateMissileEnemy()
     {
-        //spawn shooting
+        //spawn missile enemy
         tempEnemy = Instantiate(missileEnemyPreFab);
         tempEnemy.transform.position = spawnPositions[Random.Range(0, spawnPositions.Length)].position;
         tempEnemy.GetComponent<Enemy>().weapon =  missileWeapon;

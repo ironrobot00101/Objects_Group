@@ -10,8 +10,6 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
 
     public Weapon weapon;
 
-    public Weapon weapon2;
-
     public virtual void Move(Vector2 direction, Vector2 target)
     {}
 
@@ -25,7 +23,7 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
     {}
 
     public virtual void ShootPlayer()
-    { }
+    {}
 
     public virtual void Attack(float interval)
     {
@@ -41,13 +39,11 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
 
     public virtual void GetDamage(float damage)
     {
-        
         health.DeductHealth(damage);
         if (health.GetHealth() <= 0)
         {
             Die();
         }
-            
     }
 
     public void GetDamage(int speed)

@@ -7,8 +7,6 @@ public class MeleeEnemy : Enemy
 
     [SerializeField] private float meleeDamage = 25;
 
-    private float timer = 0;
-
     protected override void Start()
     {
         //base is just the virtual class that it is inheriting from????
@@ -36,24 +34,10 @@ public class MeleeEnemy : Enemy
     {
         Attack(target);
     }
-    public override void Attack(float interval)
-    {
-        if (timer <= interval)
-        {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            timer = 0;
-            //inheritted from parent script
-            target.GetComponent<IDamageable>().GetDamage(0);
-        }
-    }
 
     public override void Attack(Transform target)
     {
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        
     }
 
     public override void Die()

@@ -13,16 +13,12 @@ public class ShootingEnemy : Enemy
 
     [SerializeField] protected float bulletDamage;
 
-    private bool tooCloseToPlayer;
-
     protected override void Start()
     {
         
         base.Start();
         health = new Health(200, 0, 200);
-        
         weapon = new Weapon("Shooting Enemy Weapon", bulletDamage, bulletSpeed);
-        tooCloseToPlayer = false;
     }
 
     protected void Awake()
@@ -32,34 +28,10 @@ public class ShootingEnemy : Enemy
     protected override void Update()
     {
         base.Update();
-        //move while not in the player perimeter
-        if (!tooCloseToPlayer)
-        {
-            Vector2 direction = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
-            transform.right = direction;
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        }
+        Vector2 direction = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
+        transform.right = direction;
+        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player_Perimeter"))
-        {
-            //have entered the perimeter and need to stop moving towards player
-            tooCloseToPlayer = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player_Perimeter"))
-        {
-            //have entered the perimeter and need to stop moving towards player
-            tooCloseToPlayer = false;
-        }
-    }
-
-
     public void SetShootingEnemy(float _attackTime)
     {
         attackTime = _attackTime;
@@ -75,16 +47,9 @@ public class ShootingEnemy : Enemy
         base.GetDamage(damage);
     }
 
-    public override void Shoot()
-    {
-        //shoot the player
-        
-    }
-
     public override void Attack(float interval)
     {
-        //Attack the enemy
-        
+        //start shooting
         ShootBullet(interval);
         
     }

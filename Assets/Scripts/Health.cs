@@ -20,7 +20,6 @@ public class Health
 
         currentHealth = value;
     }
-    //these can have the same name because they have different paramters, and the compiler can distinguish
     public Health(float _maxHealth, float _healthRegenRate, float _currentHealth)
     {
         maxHealth = _maxHealth;
@@ -37,7 +36,7 @@ public class Health
 
     public void RegenHealth()
     {
-        //why multiply by time.deltatime??
+        //this is currently not being used
         AddHealth(healthRegenRate * Time.deltaTime);
     }
 

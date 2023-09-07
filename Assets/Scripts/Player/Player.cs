@@ -34,10 +34,6 @@ public class Player : PlayableObject
     [SerializeField] private float bombFuseTime = 2;
     [SerializeField] private float bombShootSpeed;
     private ParticleSystem explosion;
-    private void FixedUpdate()
-    {
-
-    }
 
     public void SetPowerupFeatures()
     {
@@ -47,10 +43,6 @@ public class Player : PlayableObject
     public void ResetPowerupsToNull()
     {
         isPowerupActive = false;
-    }
-
-    private void Awake()
-    {
     }
 
     private void Start()
@@ -70,24 +62,21 @@ public class Player : PlayableObject
         ScoreManager.health = health.GetHealth();
     }
 
-    public override void Move(Vector2 direction, Vector2 target)
-    {
-        
-    }
-
     private void Update()
     {
-
+        //shoot on mouse click
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Shoot();
         }
+        //shoot at fast rate
         //only can be held while powerup is active
         if (Input.GetKey(KeyCode.Mouse0) && isPowerupActive && !isShooting)
         {
             isShooting = true;
             StartCoroutine(ShootHold());
         }
+        //shoo
         if (ScoreManager.bombsInventory > 0)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -109,7 +98,7 @@ public class Player : PlayableObject
 
     public override void Attack(Transform target)
     {
-
+        //not used, but needs to be here for interface...
     }
 
     public override void GetDamage(float damage)
@@ -117,8 +106,10 @@ public class Player : PlayableObject
         health.DeductHealth(damage);
         audioManager.PlaySFXAudio("player_hit_bullet");
         Debug.Log(health.GetHealth() + "is the players health");
+
         //update scoreboard
         ScoreManager.health = health.GetHealth();
+
         if (Mathf.RoundToInt(health.GetHealth()) <= 0)
         {
             Die();
@@ -169,10 +160,4 @@ public class Player : PlayableObject
             yield return new WaitForSeconds(0.5f);
             Destroy(tempBomb.gameObject);
     }
-
-
-
-
-
-
 }
