@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    //variables
     public bool isActiveInventory = true;
     private bool isFirstTime;
     public ParticleSystem explosion;

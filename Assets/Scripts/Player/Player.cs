@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Player : PlayableObject
 {
+    //variables
     [SerializeField] private Camera cam;
     [SerializeField] protected float speed;
-
     [SerializeField] private float weaponDamage;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletPowerupSpeed = 0.5f;
@@ -19,23 +19,17 @@ public class Player : PlayableObject
     //firepoint
     [SerializeField] private Transform firePoint;
 
-    private int currentScore;
-    private int highscore = 0;
-
     [SerializeField]
     private AudioManager audioManager;
 
-    private ScoreManager scoreManager;
-
     public Action<float> OnHealthUpdate;
-
-    private Rigidbody2D playerRB;
 
     private bool isPowerupActive;
     private bool isShooting = false;
-    public bool _hasBomb = false;
+
 
     // bomb stuff
+    public bool _hasBomb = false;
     public bool isActiveInventory;
     [SerializeField] private float bombFuseTime = 2;
     [SerializeField] private float bombShootSpeed;
@@ -62,7 +56,6 @@ public class Player : PlayableObject
     private void Start()
     {
         health = new Health(maxHealthSet, 0.5f, currentHealthSet);
-        playerRB = GetComponent<Rigidbody2D>();
         health.RegenHealth();
 
         //Set The Player Weapon
@@ -84,7 +77,7 @@ public class Player : PlayableObject
 
     private void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Shoot();
@@ -95,9 +88,9 @@ public class Player : PlayableObject
             isShooting = true;
             StartCoroutine(ShootHold());
         }
-        if (_hasBomb)
+        if (ScoreManager.bombsInventory > 0)
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("bomb is being shot");
                 Shoot(bombPreFab, firePoint);
@@ -162,9 +155,6 @@ public class Player : PlayableObject
 
     public IEnumerator BlowUp(Bomb tempBomb)
     {
-        //play fuse sound
-        if (_hasBomb)
-        {
             explosion = tempBomb.GetComponentInChildren<ParticleSystem>();
             audioManager.PlaySFXAudio("bomb_fuse");
             yield return new WaitForSeconds(bombFuseTime);
@@ -178,9 +168,6 @@ public class Player : PlayableObject
             }
             yield return new WaitForSeconds(0.5f);
             Destroy(tempBomb.gameObject);
-        }
-        
-        //inflict damage
     }
 
 
